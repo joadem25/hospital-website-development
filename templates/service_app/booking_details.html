@@ -1,0 +1,186 @@
+{% extends 'main_page.html' %}
+
+{% block title %} BOOK DETAILS {% endblock title %}
+
+{% block body_content %}
+
+
+    <div class='row'>
+      <div class='col-3'></div>
+      <div class='col-md-6 col-12 col-offset-3'>
+            <span>
+            {% if messages %}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+            {% endif %} 
+            </span>
+            {% if booking_details %}
+
+                {% for detail in booking_details %}
+                    <div class="card">
+                        <header class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon"><i class="mdi mdi-account"></i></span>
+                           Patient ID: {{detail.user.id}} 
+                        </p>
+                        </header>
+
+                        <div class="card-content">
+                        {% if detail.user.profile.profile_passport %}
+                            <div class="image w-48 h-60 p-4">
+                                <img src="{{detail.user.profile.profile_passport.url}}" alt="{{detail.user.profile.username}}" class="rounded-circle" height="100px" width="100px">
+                            </div>
+                        {% else %}
+                            <div class="image w-30 h-10 mx-auto">
+                            <img src="https://avatars.dicebear.com/v2/initials/{{detail.user.profile.username}}" alt="{{profile.user.username}}" class="rounded-full">
+                            </div>
+                        {% endif %}
+                    <hr>
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.user.first_name}} {{detail.user.last_name}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">E-mail</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.user.email}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Phone</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.user.profile.phone}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Service</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.service_option}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Description</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.description}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Payment</label>
+                        {% if detail.payment == 1%}
+                        <div class="control">
+                        <input type="text" readonly value="Paid" class="input is-static">
+                        </div>
+                        {% else %}
+                        <div class="control">
+                        <input type="text" readonly value="Not paid" class="input is-static">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Assigned Doctor</label>
+                        <div class="control">
+                            {% if detail.resident_doctor_id == 1 or detail.consultant_doctor_id %}
+
+                            {% else %}
+                            {% endif %}
+                        <input type="text" readonly value="{{detail.resident_doctor}} {{detail.consultant_doctor}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Approved date and time</label>
+                        <div class="control">
+                        <input type="text" readonly value="Date: {{detail.approved_date}} Time: {{detail.approved_time}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Served</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.served}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Patient status</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{detail.patient_status}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                        <div class="field">
+                            <label class="label">Doctor's Remark </label>
+                            <div class="control">
+                            <input type="text" readonly value="{{detail.doctor_remark}}" class="input is-static">
+                            </div>
+                        </div>
+
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                        <div class="d-flex">
+                            <div class="field">
+                                <div class="control btn ">
+                                    <a href="{% url 'edit_booking' detail.booking_id %}">
+                                        <span class="font-weight-bold">
+                                            Refer
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="btn">
+                                    <a href="{% url 'edit_booking' detail.booking_id %}">
+                                        <span style="color: #13C5DD;" class="font-weight-bold">
+                                            Edit
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="btn">
+                                    <a href="{% url 'edit_booking' detail.booking_id %}">
+                                        <span style="color: #13C5DD;" class="font-weight-bold">
+                                            Accept
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="btn">
+                                    <a href="{% url 'decline_booking' detail.booking_id %}">
+                                        <span style="color: #13C5DD;" class="font-weight-bold">
+                                            Decline
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endif %}
+                        
+                    
+                    </div>
+    
+                </div>
+                </div>
+
+            </div>
+                {% endfor %}
+            {% endif %}
+
+      </div>
+      </div>
+      
+    </div>
+</div>
+
+
+{% endblock body_content %}

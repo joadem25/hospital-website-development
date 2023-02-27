@@ -1,0 +1,51 @@
+{% extends 'main_page.html' %}
+
+{% block title %} BOOKING FORM {% endblock title %}
+
+{% block body_content %}
+
+
+    <div class="row ">
+        <div class="col-3"></div>
+            <div class="col-md-6 col-12 col-offset-3">
+                 
+                <span>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{message}}
+                        {% endfor %}
+                    {% endif %} 
+                </span>
+                
+                <div class="bg-light text-center rounded p-5">
+                    <h1 class="mb-4">Book An Appointment</h1>
+                    <form method="post" class="mt-4" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% load bootstrap %}
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                Email: {{booking_form.email}}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                Services {{booking_form.service_option}}
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                Date: {{booking_form.date_created}}
+                            </div>
+                            <div class="col-12 col-sm-7">
+                                {{booking_form.description}}
+                            </div>
+                            <div class="col-12 col-sm-6 mt-3 mx-auto">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Make An Appointment</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        
+
+
+{% endblock body_content %}

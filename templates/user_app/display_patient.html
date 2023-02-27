@@ -1,0 +1,98 @@
+{% extends 'main_page.html' %}
+
+{% block title %} DISPLAY PATIENT {% endblock title %}
+
+{% block body_content %}
+
+<div>
+    <section class="is-title-bar">
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+            <ul>
+                <li>Display Patient</li>
+            </ul>
+        </div>
+    </section>
+    <section class="section main-section">
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-3 mb-6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="flex items-center justify-between">
+                        <div class="widget-label">
+                            <table class="table table-striped table-hover mx-auto px-auto">
+                                <thead style="background-color: red;">
+                                    <th>STAFF ID</th>
+                                    <th>PICTURE</th>
+                                    <th>USERNAME</th>
+                                    <th>FULL NAME</th>
+                                    <th>POSITION</th>
+                                    <th>DEPARTMENT</th>
+                                    <th>STATUS</th>
+                                    <th>PROFILE</th>
+                                </thead>
+                                {% if patient %}
+
+                                {% for patient in patient%}
+                                    <tr>
+                                        <td>
+                                            <span style="color:blue" class="font-weight-bold">
+                                                {{patient.user.id}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {% if patient.profile_passport %}
+                                                <img src="{{patient.profile_passport.url}}" alt="img" width="100px" height="100px">
+                                                {% else %}
+                                                <i class="fas fa-user fa-lag fa-fw text-dark me-2"> </i>
+                                                {% endif%}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {{patient.user.username}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {{patient.user.first_name}} {{patient.user.last_name}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {{patient.position}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {{patient.department}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="color: red;" class="font-weight-bold">
+                                                {{patient.status}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'my_profile' patient.user_id %}">
+                                                <span style="color: purple;" class="font-weight-bold">
+                                                    Profile
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                {%endif%}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+{% endblock body_content %}

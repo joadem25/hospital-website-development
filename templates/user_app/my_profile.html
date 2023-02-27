@@ -1,0 +1,179 @@
+{% extends 'main_page.html' %}
+
+{% block title %} MY PROFILE {% endblock title %}
+
+{% block body_content %}
+
+
+    <div class='row'>
+      <div class='col-3'></div>
+      <div class='col-md-6 col-12 col-offset-3'>
+            <span>
+            {% if messages %}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+            {% endif %} 
+            </span>
+            {% if myprofile %}
+
+                {% for profile in myprofile %}
+                    <div class="card">
+                        <header class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon"><i class="mdi mdi-account"></i></span>
+                            {{profile.user.username}}
+                        </p>
+                        </header>
+
+                        <div class="card-content">
+                        {% if profile.profile_passport %}
+                            <div class="image w-48 h-60 p-4">
+                                <img src="{{profile.profile_passport.url}}" alt="{{profile.user.username}}" class="rounded-circle" height="100px" width="100px">
+                            </div>
+                        {% else %}
+                            <div class="image w-30 h-10 mx-auto">
+                            <img src="https://avatars.dicebear.com/v2/initials/{{profile.user.username}}" alt="{{profile.user.username}}" class="rounded-full">
+                            </div>
+                        {% endif %}
+                    <hr>
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.user.first_name}} {{profile.user.last_name}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">E-mail</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.user.email}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Phone</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.phone}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Date of birth</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.date_of_birth}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Marital status</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.marital_status}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Address</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.address}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">State</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.state}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Nationality</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.nationality}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    {% if request.user.is_staff %}
+                    <div class="field">
+                        <label class="label">Position</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.position}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field">
+                        <label class="label">Department</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.department}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    {% if profile.particulars %}
+                        <div class="field">
+                            <label class="label">Particulars</label>
+                            <div class="control">
+                            <input type="text" readonly value="{{profile.particulars}}" class="input is-static">
+                            </div>
+                        </div>
+                        <hr>
+                    {% endif %}
+                    {% if profile.means_of_identity %}
+                        <div class="field">
+                            <label class="label">Means of Identity</label>
+                            <div class="control">
+                            <input type="text" readonly value="{{profile.means_of_identity}}" class="input is-static">
+                            </div>
+                        </div>
+                        <hr>
+                    {% endif %}
+                    <div class="field">
+                        <label class="label">Staff ID</label>
+                        <div class="control">
+                        <input type="text" readonly value="HSTP0{{profile.user_id}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    <div class="field">
+                        <label class="label">Status</label>
+                        <div class="control">
+                        <input type="text" readonly value="{{profile.status}}" class="input is-static">
+                        </div>
+                    </div>
+                    <hr>
+                    {% if request.user.is_staff or request.user.is_superuser %}
+                        <div class="field">
+                        <div class="control">
+                            <a href="{% url "edit_profile" profile.user_id %}">
+                            <button type="submit" class="button green">
+                            Edit Account
+                            </button>
+                            </a>
+                            <a href="{% url "deactivate_profile" profile.user_id %}">
+                            <button type="submit" class="button red">
+                                {% if profile.user.is_active == 1 %}
+                                    Deactivate
+                                {% else %}
+                                    Activate
+                                {% endif %}
+                            </button>
+                            </a>
+                        </div>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+      </div>
+      </div>
+      <div class='col-3'></div> 
+    </div>
+</div>
+
+
+{% endblock body_content %}
